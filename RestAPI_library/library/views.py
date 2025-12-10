@@ -1,4 +1,4 @@
-# views.py
+from django.db.models import Count
 from rest_framework import viewsets, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
@@ -38,7 +38,6 @@ class BookViewSet(viewsets.ModelViewSet):
             return BookListSerializer
         return BookDetailSerializer
 
-    # Удалён кастомный get_queryset с Q-фильтрацией — он дублирует SearchFilter
 
     @action(detail=True, methods=['get'])
     def download(self, request, pk=None):
@@ -55,7 +54,6 @@ class BookViewSet(viewsets.ModelViewSet):
 
     @action(detail=False, methods=['get'])
     def stats(self, request):
-        from django.db.models import Count
         total_books = Book.objects.count()
         total_authors = Author.objects.count()
         books_by_type = Book.objects.values('book_type').annotate(count=Count('id'))
