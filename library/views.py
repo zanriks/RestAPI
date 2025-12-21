@@ -20,7 +20,6 @@ class BookViewSet(viewsets.ModelViewSet):
     search_fields = ['title', 'author__name']
 
     def create(self, request, *args, **kwargs):
-        # Только админ может добавлять книги
         if not request.user.is_staff:
             return Response(
                 {"detail": "Только администратор может добавлять книги."},

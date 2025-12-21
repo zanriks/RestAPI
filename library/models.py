@@ -24,6 +24,8 @@ class Book(models.Model):
     )
 
     class Meta:
+        verbose_name = "Книга"
+        verbose_name_plural = "Книги"
         constraints = [
             models.UniqueConstraint(
                 fields=['title', 'author', 'year', 'publisher'],
@@ -41,6 +43,16 @@ class Author(models.Model):
     bio = models.TextField()
     date_of_birth = models.DateField()
     date_of_death = models.DateField()
+
+    class Meta:
+        verbose_name = "<UNK>"
+        verbose_name_plural = "<UNK>"
+        constraints = [
+            models.UniqueConstraint(
+                fields=['first_name', 'last_name'],
+                name='unique_author_name'
+            )
+        ]
 
     def __str__(self):
         return f"{self.first_name} ({self.last_name})"
