@@ -5,7 +5,6 @@
 2. Создайте виртуальное окружение
    python -m venv venv
    source venv/bin/activate  # Linux/Mac
-   # или
    venv\Scripts\activate     # Windows
 3. Установите зависимость
    pip install -r requirements.txt
