@@ -17,7 +17,7 @@ class BookViewSet(viewsets.ModelViewSet):
     serializer_class = BookSerializer
     filter_backends = [DjangoFilterBackend, SearchFilter]
     filterset_fields = ['genre', 'category']
-    search_fields = ['title', 'author__name']
+    search_fields = ['title', 'author__first_name', 'author__last_name']
 
     def create(self, request, *args, **kwargs):
         if not request.user.is_staff:

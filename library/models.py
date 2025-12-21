@@ -1,14 +1,13 @@
 from django.db import models
-
+from django.core.validators import MinValueValidator, MaxValueValidator
 # Create your models here.
 
 class Author(models.Model):
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
     bio = models.TextField()
-    date_of_birth = models.DateField()
-    date_of_death = models.DateField()
-
+    date_of_birth = models.DateField(null=True, blank=True)
+    date_of_death = models.DateField(null=True, blank=True)
     class Meta:
         verbose_name = "Автор"
         verbose_name_plural = "Авторы"
@@ -20,7 +19,7 @@ class Author(models.Model):
         ]
 
     def __str__(self):
-        return f"{self.first_name} ({self.last_name})"
+        return f"{self.first_name} {self.last_name}"
 
 class Publisher(models.Model):
     name = models.CharField(max_length=150, unique=True, verbose_name="Название издательства")
@@ -40,7 +39,7 @@ class Book(models.Model):
 
     title = models.CharField(max_length=100, verbose_name = "Название")
     author = models.ForeignKey(Author, on_delete=models.CASCADE, related_name = 'books', verbose_name = "Автор книги")
-    year = models.IntegerField(verbose_name = "Год издания")
+    year = models.IntegerField(verbose_name = "Год издания", validators = [MinValueValidator(1000), MaxValueValidator(9999)])
     genre = models.CharField(max_length=100, verbose_name = "Жанр")
     category = models.CharField(max_length=100, verbose_name = "Категория")
     publisher = models.ForeignKey(Publisher, on_delete=models.CASCADE, verbose_name = "Издательство")
