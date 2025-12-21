@@ -21,16 +21,6 @@ class Author(models.Model):
     def __str__(self):
         return f"{self.first_name} {self.last_name}"
 
-class Publisher(models.Model):
-    name = models.CharField(max_length=150, unique=True, verbose_name="Название издательства")
-
-    class Meta:
-        verbose_name = "Издательство"
-        verbose_name_plural = "Издательства"
-
-    def __str__(self):
-        return self.name
-
 class Book(models.Model):
     BOOK_TYPE_CHOICES = [
         ('textbook', 'Учебник'),
@@ -42,7 +32,7 @@ class Book(models.Model):
     year = models.IntegerField(verbose_name = "Год издания", validators = [MinValueValidator(1000), MaxValueValidator(9999)])
     genre = models.CharField(max_length=100, verbose_name = "Жанр")
     category = models.CharField(max_length=100, verbose_name = "Категория")
-    publisher = models.ForeignKey(Publisher, on_delete=models.CASCADE, verbose_name = "Издательство")
+    publisher = models.CharField(verbose_name = "Издательство")
     cover = models.ImageField(upload_to='covers/', null=True, blank=True, verbose_name = "Обложка")
     file = models.FileField(upload_to='books/', null=True, blank=True, verbose_name = "Фай книги")
     book_type = models.CharField(
